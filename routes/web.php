@@ -18,10 +18,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('guest')->group(function () {
-    Route::view('/signup', 'auth.signup')->name('login');
+    Route::view('/signup', 'auth.signup');
     Route::post('/signup', [AuthController::class, 'signup']);
     Route::view('/signin', 'auth.signin');
-    Route::post('/signin', [AuthController::class, 'signin']);
+    Route::post('/signin', [AuthController::class, 'signin'])->name('login');
 });
 
 Route::middleware('auth')->group(function () {
@@ -40,6 +40,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin', [AdminController::class, 'index']);
     Route::post('/verified/{id_user}', [AdminController::class, 'verified']);
     Route::post('/hapusUser/{id_user}', [AdminController::class, 'destroy']);
-    Route::post('/admin/edit/{id_user}', [AdminController::class, 'edit']);
-    Route::post('/admin/editUser/{id_user}', [AdminController::class, 'update']);
+    Route::get('/admin/edit/{id_user}', [AdminController::class, 'edit']);
+    Route::put('/editUser/{id_user}', [AdminController::class, 'update']);
 });

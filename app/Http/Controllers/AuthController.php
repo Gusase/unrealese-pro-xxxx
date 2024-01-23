@@ -51,12 +51,13 @@ class AuthController extends Controller
         return redirect()->back()->with('username_email', request()->username_email);
     }
 
-    public function signout() {
+    public function signout()
+    {
         Auth::logout();
 
         request()->session()->invalidate();
         request()->session()->regenerateToken();
 
-        return redirect()->to('signin');
+        return to_route('login');
     }
 }

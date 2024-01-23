@@ -6,6 +6,7 @@ use App\Models\File;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
@@ -61,17 +62,48 @@ class AdminController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $title = 'Edit Profil';
+        $user = User::where('id_user', $id)->first();
+
+        return view('user.admin.edit', compact('title', 'user'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $id_user)
     {
-        //
+        dd($request);
+        $user = $id_user;
+		if ($user->status != 2) {
+			abort(404);
+		}
+
+		$validated = $request->validated();
+		$validated = $request->safe()->only(['fullname', 'username', 'email', 'password', 'pp']);
+		$newAvatar = $validated['pp'] ?? null;
+		$path = 'users/' . Auth::id();
+
+		if (Storage::disk('public')->exists(Auth::user()->pp) && !is_null($newAvatar)) {
+			Storage::delete(Auth::user()->pp);
+		}
+
+		if (!is_null($newAvatar)) {
+			$validPathPP = Storage::disk('public')->put($path, $newAvatar);
+			$validated['pp'] = $validPathPP;
+		}
+
+		if (isset($validated['password'])) {
+			$validated['password'] = Hash::make($request->input('password'));
+		}
+
+		$user->update($validated);
+
+
+		session()->flash('berhasil', 'Berhasil mengedit data');
+        return redirect()->back();
     }
 
     /**
