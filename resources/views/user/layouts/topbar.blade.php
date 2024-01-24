@@ -13,7 +13,8 @@
 
     @if (url()->current() === env('APP_URL') ||
             url()->current() === env('APP_URL') . '/file-global' ||
-            url()->current() === env('APP_URL') . '/admin')
+            url()->current() === env('APP_URL') . '/admin' ||
+            url()->current() === env('APP_URL') . '/notifikasi')
         <form class="w-4/5 max-md:mx-auto sm:w-1/2 xl:w-7/12">
             <div class="relative">
                 <button role="button" type="submit"
@@ -42,7 +43,7 @@
 
     <div
         class="lg:flex gap-2 md:gap-7 items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse hidden min-w-[10rem] w-0 justify-end">
-        @unless (request()->routeIs('notification'))
+        @unless (request()->is('notifikasi*'))
             <button role="button" type="button"
                 class="relative grid place-items-center text-sm rounded-full w-5 h-5 md:me-0 focus:ring-2 focus:ring-gray-300"
                 id="dropdownDefaultButton" data-dropdown-toggle="notif">
@@ -55,47 +56,47 @@
                         class="absolute inline-flex items-center justify-center w-4 h-4 text-[10px] font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2">{{ $jumlahPesan }}</span>
                 @endunless
             </button>
+            <div class="z-50 w-72 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow"
+                id="notif">
+                <div class="block px-3 py-2 font-medium text-center text-gray-700 rounded-t-lg bg-gray-50">
+                    Notifications
+                </div>
+                <div>
+                    @unless (count($pesan))
+                        <div class="px-3 py-4">
+                            <div class="text-gray-700 text-center">
+                                <span>No notification yet</span>
+                            </div>
+                        </div>
+                    @endunless
+                    @foreach (array_slice($pesan->all(), 0, 4) as $p)
+                        <div class="px-3 py-2.5 flex items-center">
+                            <div class="mr-3">
+                                <div class="overflow-hidden">
+                                    <img class="w-10 aspect-square rounded-full object-cover"
+                                        src="{{ $p->user->pp === 'img/defaultProfile.svg' ? asset('img/defaultProfile.svg') : asset('storage/' . $p->user->pp) }}"
+                                        alt="{{ $p->id_pengirim }}">
+                                </div>
+                            </div>
+                            <div>
+                                <div title="{{ $p->created_at }}" class="text-xs text-gray-700">
+                                    {{ $p->created_at->format('F d, Y h:i A') }}
+                                </div>
+                                <span class="text-[0.85rem]"><a href=""
+                                        class="isolate text-[0.85rem] truncate w-[85%] md:w-max font-normal relative no-underline before:absolute before:inset-0 before:-z-[1] before:block before:bg-gray-300/75 before:transition-transform before:scale-x-0 before:origin-bottom-right hover:before:scale-x-100 hover:before:origin-bottom-left hover:text-black duration-150 p-0.5 pb-0">{{ $p->user->username }}</a>
+                                    mengirim anda file! <a href=""
+                                        class="text-gray-800 font-medium hover:underline">Lihat file.</a></span>
+                            </div>
+                        </div>
+                    @endforeach
+                    @if (count($pesan) > 4)
+                        <a href="/notifikasi"
+                            class="block py-2 w-full text-xs font-medium text-center text-gray-900 rounded-b-lg bg-gray-50 hover:bg-gray-100">Notifikasi
+                            lainnya</a>
+                    @endif
+                </div>
+            </div>
         @endunless
-        <div class="z-50 w-72 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow"
-            id="notif">
-            <div class="block px-3 py-2 font-medium text-center text-gray-700 rounded-t-lg bg-gray-50">
-                Notifications
-            </div>
-            <div>
-                @unless (count($pesan))
-                    <div class="px-3 py-4">
-                        <div class="text-gray-700 text-center">
-                            <span>No notification yet</span>
-                        </div>
-                    </div>
-                @endunless
-                @foreach (array_slice($pesan->all(), 0, 4) as $p)
-                    <div class="px-3 py-2.5 flex items-center">
-                        <div class="mr-3">
-                            <div class="overflow-hidden">
-                                <img class="w-10 aspect-square rounded-full object-cover"
-                                    src="{{ $p->user->pp === 'img/defaultProfile.svg' ? asset('img/defaultProfile.svg') : asset('storage/' . $p->user->pp) }}"
-                                    alt="{{ $p->id_pengirim }}">
-                            </div>
-                        </div>
-                        <div>
-                            <div title="{{ $p->created_at }}" class="text-xs text-gray-700">
-                                {{ $p->created_at->format('F d, Y h:i A') }}
-                            </div>
-                            <span class="text-[0.85rem]"><a href=""
-                                    class="isolate text-[0.85rem] truncate w-[85%] md:w-max font-normal relative no-underline before:absolute before:inset-0 before:-z-[1] before:block before:bg-gray-300/75 before:transition-transform before:scale-x-0 before:origin-bottom-right hover:before:scale-x-100 hover:before:origin-bottom-left hover:text-black duration-150 p-0.5 pb-0">{{ $p->user->username }}</a>
-                                mengirim anda file! <a href=""
-                                    class="text-gray-800 font-medium hover:underline">Lihat file.</a></span>
-                        </div>
-                    </div>
-                @endforeach
-                @if (count($pesan) > 4)
-                    <a href=""
-                        class="block py-2 w-full text-xs font-medium text-center text-gray-900 rounded-b-lg bg-gray-50 hover:bg-gray-100">See
-                        Notifikasi lainnya</a>
-                @endif
-            </div>
-        </div>
         <button role="button"
             class="inline-flex min-w-0 items-center hover:ring-2 duration-150 hover:ring-gray-200 focus:ring-2 focus:ring-gray-200 rounded-full ring-offset-2"
             aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom"

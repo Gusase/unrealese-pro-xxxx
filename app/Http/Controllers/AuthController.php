@@ -44,11 +44,13 @@ class AuthController extends Controller
                 return redirect()->intended();
             } else {
                 session()->flash('gagal', 'Akun belum aktif, harap hubungi administrator');
+                session()->flash('username_email', request()->username_email);
                 return back()->withInput(['username_email', request()->username_email]);
             }
         }
 
         session()->flash('gagal', 'Username atau password salah');
+        session()->flash('username_email', request()->username_email);
         return back()->withInput(['username_email', request()->username_email]);
     }
 

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\PesanController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,4 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/hapusUser/{id_user}', [AdminController::class, 'destroy']);
     Route::get('/admin/edit/{id_user}', [AdminController::class, 'edit']);
     Route::post('/editUser/{id_user}', [AdminController::class, 'update']);
+    Route::get('/notifikasi', [PesanController::class, 'index']);
+    Route::get('/notifikasi/{id_pesan}', [PesanController::class, 'show']);
+    Route::get('/notifikasi/hapus/{id_pesan}', [PesanController::class, 'destroy']);
 });

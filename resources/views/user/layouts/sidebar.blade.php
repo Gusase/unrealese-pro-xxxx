@@ -9,7 +9,7 @@
         <span class="text-xs">File baru</span>
     </div>
 
-    <a href="/" data-tooltip-target="file-mine" data-tooltip-placement="right"
+    <a href="" data-tooltip-target="file-mine" data-tooltip-placement="right"
         class="mt-5 flex gap-3 items-center px-4 py-2.5 rounded-full flex-col justify-center w-full aspect-square !mb-1 @if(request()->is('/') || request()->is('file*')) bg-gray-300 @else hover:bg-gray-200 @endif">
         <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
             viewBox="0 0 20 20">
@@ -100,7 +100,7 @@
                 <div class="inline-block h-8 w-0.5 self-stretch bg-gray-300 opacity-100">
                 </div>
 
-                <a href="/"
+                <a href="/notifikasi"
                     class="relative grid place-items-center text-sm rounded-full w-5 h-5 md:me-0 focus:ring-2 focus:ring-gray-300">
                     <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512">
                         <path
