@@ -6,7 +6,7 @@
             class="px-4 pb-4 pt-0 lg:pt-8 sm:px-6 md:px-4 lg:min-h-full lg:flex-auto lg:border-x
     lg:border-slate-200 lg:px-8 lg:py-12 xl:px-12">
             <div
-                class="relative mb-5 pb-4 before:absolute before:bottom-0 before:left-0 before:h-px
+                class="relative mb-5 pb-2 before:absolute before:bottom-0 before:left-0 before:h-px
                       before:w-6 before:bg-gray-950 after:absolute after:bottom-0 after:left-8 after:right-0 after:h-px
                       after:bg-gray-900/20">
                 <h3 class="text-2xl font-mona font-medium">

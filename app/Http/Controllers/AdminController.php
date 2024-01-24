@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\File;
+use App\Models\Pesan;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,6 +18,8 @@ class AdminController extends Controller
     public function index()
     {
         $title = 'Admin Dashboard';
+        $pesan = Pesan::where('id_penerima', auth()->id())->with(['user','file'])->orderBy('created_at','desc')->get();
+        $jumlahPesan = $pesan->count();
         $usersQuery = User::whereIn('status', [0, 1]);
         if (request('search')) {
             $searchTerm = '%' . request('search') . '%';
@@ -32,7 +35,7 @@ class AdminController extends Controller
         $userUnverified = User::where('status', 0)->count();
         $countFiles = File::count();
 
-        return view('user.admin.index', compact('title', 'users', 'countUsers', 'countFiles', 'userVerified', 'userUnverified'));
+        return view('user.admin.index', compact('title', 'users', 'countUsers', 'countFiles', 'userVerified', 'userUnverified', 'pesan', 'jumlahPesan'));
     }
 
     /**
@@ -65,9 +68,11 @@ class AdminController extends Controller
     public function edit($id)
     {
         $title = 'Edit Profil';
+        $pesan = Pesan::where('id_penerima', auth()->id())->with(['user','file'])->orderBy('created_at','desc')->get();
+        $jumlahPesan = $pesan->count();
         $user = User::where('id_user', $id)->first();
 
-        return view('user.admin.edit', compact('title', 'user'));
+        return view('user.admin.edit', compact('title', 'user', 'pesan', 'jumlahPesan'));
     }
 
     /**
@@ -75,35 +80,44 @@ class AdminController extends Controller
      */
     public function update(Request $request, User $id_user)
     {
-        dd($request);
-        $user = $id_user;
-		if ($user->status != 2) {
+		if (Auth::user()->status != 2) {
 			abort(404);
 		}
 
-		$validated = $request->validated();
-		$validated = $request->safe()->only(['fullname', 'username', 'email', 'password', 'pp']);
-		$newAvatar = $validated['pp'] ?? null;
-		$path = 'users/' . Auth::id();
+        $errors = [
+            'fullname.required' => 'Nama lengkap tidak boleh kosong!',
+            'fullname.regex' => 'Nama lengkap hanya boleh mengandung huruf!',
+            'fullname.min' => 'Nama lengkap harus memiliki setidaknya 5 karakter!',
+            'username.required' => 'Username tidak boleh kosong!',
+            'username.min' => 'Username harus memiliki setidaknya 5 karakter!',
+            'username.unique' => 'Username sudah digunakan!',
+            'email.required' => 'Email tidak boleh kosong!',
+            'email.email' => 'Format email tidak valid!',
+            'email.unique' => 'Email sudah digunakan!',
+            'password.required' => 'Password tidak boleh kosong!',
+            'password.min' => 'Password harus memiliki setidaknya 6 karakter!',
+            'password.confirmed' => 'Konfirmasi password tidak cocok!',
+        ];
 
-		if (Storage::disk('public')->exists(Auth::user()->pp) && !is_null($newAvatar)) {
-			Storage::delete(Auth::user()->pp);
-		}
+        $user = $id_user;
+        $rules = [
+            'fullname' => 'required|regex:/^[a-zA-Z\s]+$/|min:5',
+            'username' => $user->username == $request->input('username') ? 'required' : 'required|min:5|unique:users',
+            'email' => $user->email == $request->input('email') ? 'required' : 'required|email|unique:users'
+        ];
 
-		if (!is_null($newAvatar)) {
-			$validPathPP = Storage::disk('public')->put($path, $newAvatar);
-			$validated['pp'] = $validPathPP;
-		}
+        if (!$request->input('password') || Hash::check($request->input('password'), $user->password)) {
+            $validasiData = $request->validate($rules, $errors);
+        } else {
+            $rules['password'] = 'required|min:6';
+            $validasiData = $request->validate($rules, $errors);
+            $validasiData['password'] = Hash::make($validasiData['password']);
+        }
 
-		if (isset($validated['password'])) {
-			$validated['password'] = Hash::make($request->input('password'));
-		}
-
-		$user->update($validated);
-
+        $user->update($validasiData);
 
 		session()->flash('berhasil', 'Berhasil mengedit data');
-        return redirect()->back();
+        return redirect('/admin');
     }
 
     /**

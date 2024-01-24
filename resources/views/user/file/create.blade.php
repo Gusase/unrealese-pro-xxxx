@@ -86,7 +86,7 @@
                 class="!pb-1 relative mb-5 pb-4 before:absolute before:bottom-0 before:left-0 before:h-px
             before:w-6 before:bg-gray-950 after:absolute after:bottom-0 after:left-8 after:right-0 after:h-px
             after:bg-gray-900/20">
-                <h2 class="text-2xl font-normal font-mona leading-7 text-gray-900">Tambah file baru</h2>
+                <h2 class="text-2xl font-mona leading-7 text-gray-900 font-medium">Tambah file baru</h2>
             </div>
 
             <div class="dropArea mb-4">

@@ -21,7 +21,7 @@ Route::middleware('guest')->group(function () {
     Route::view('/signup', 'auth.signup');
     Route::post('/signup', [AuthController::class, 'signup']);
     Route::view('/signin', 'auth.signin');
-    Route::post('/signin', [AuthController::class, 'signin'])->name('login');
+    Route::post('/signin', [AuthController::class, 'signin'])->name('signin');
 });
 
 Route::middleware('auth')->group(function () {
@@ -31,15 +31,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/', [UserController::class, 'index']);
     Route::view('/baru', 'user.file.create', ['title' => 'File Baru']);
     Route::resource('file', FileController::class);
+    Route::resource('user', UserController::class);
     Route::get('/file/show/{id_file}/{generate_filename}', [FileController::class, 'show']);
     Route::get('/download/{id_file}/{id_user}/{generate_filename}', [FileController::class, 'downloadPrivate']);
     Route::get('/d/{id_file}/{filename}', [FileController::class, 'downloadPublic']);
     Route::get('/do/{id_file}', [FileController::class, 'download']);
-    Route::get('/file-global/show/{id_file}/{generate_filename}', [FileController::class, 'show']);
-    Route::get('/file-global', [FileController::class, 'index']);
+    Route::get('/global-file/show/{id_file}/{generate_filename}', [FileController::class, 'show']);
+    Route::get('/global-file', [FileController::class, 'index']);
     Route::get('/admin', [AdminController::class, 'index']);
     Route::post('/verified/{id_user}', [AdminController::class, 'verified']);
     Route::post('/hapusUser/{id_user}', [AdminController::class, 'destroy']);
     Route::get('/admin/edit/{id_user}', [AdminController::class, 'edit']);
-    Route::put('/editUser/{id_user}', [AdminController::class, 'update']);
+    Route::post('/editUser/{id_user}', [AdminController::class, 'update']);
 });

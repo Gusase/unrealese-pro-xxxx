@@ -10,7 +10,7 @@
     </div>
 
     <a href="/" data-tooltip-target="file-mine" data-tooltip-placement="right"
-        class="mt-5 flex gap-3 items-center px-4 py-2.5 rounded-full bg-gray-300 flex-col justify-center w-full aspect-square !mb-1">
+        class="mt-5 flex gap-3 items-center px-4 py-2.5 rounded-full flex-col justify-center w-full aspect-square !mb-1 @if(request()->is('/') || request()->is('file*')) bg-gray-300 @else hover:bg-gray-200 @endif">
         <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
             viewBox="0 0 20 20">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -22,8 +22,8 @@
         <span class="text-xs">File saya</span>
     </div>
 
-    <a href="/file-global" data-tooltip-target="public-file" data-tooltip-placement="right"
-        class="mt-1.5 flex gap-3 items-center px-4 py-2.5 rounded-full flex-col justify-center w-full aspect-square !mb-1 hover:bg-gray-200">
+    <a href="/global-file" data-tooltip-target="public-file" data-tooltip-placement="right"
+        class="mt-1.5 flex gap-3 items-center px-4 py-2.5 rounded-full flex-col justify-center w-full aspect-square !mb-1 @if(request()->is('global-file*')) bg-gray-300 @else hover:bg-gray-200 @endif">
         <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
             viewBox="0 0 21 20">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -37,7 +37,7 @@
 
     @if (Auth::user()->status == 2)
         <a href="/admin" data-tooltip-target="admin-dashboard" data-tooltip-placement="right"
-            class="mt-1.5 flex gap-3 items-center px-4 py-2.5 rounded-full flex-col justify-center w-full aspect-square !mb-1 hover:bg-gray-200">
+            class="mt-1.5 flex gap-3 items-center px-4 py-2.5 rounded-full flex-col justify-center w-full aspect-square !mb-1 @if(request()->is('admin*')) bg-gray-300 @else hover:bg-gray-200 @endif">
             <svg class="w-5 h-5 text-gray-800" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                 stroke-width="1.5" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -57,7 +57,7 @@
 
     <button data-tooltip-target="signout" data-tooltip-placement="right" data-modal-target="modal-signout"
         data-modal-toggle="modal-signout"
-        class="mt-1.5 flex gap-3 items-center px-4 py-2.5 rounded-full flex-col justify-center w-full aspect-square !mb-1 hover:bg-gray-200">
+        class="mt-1.5 flex gap-3 items-center px-4 py-2.5 rounded-full flex-col justify-center w-full aspect-square !mb-1">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"
             class="w-4 h-4">
             <path fill-rule="evenodd"
@@ -117,7 +117,7 @@
 
             <div class="block mt-5">
                 <a href="{{ env('APP_URL') }}" data-tooltip-target="my-file" data-tooltip-placement="right"
-                    class="flex gap-3 items-center mb-3 px-4 py-2.5 rounded-full bg-gray-300 hover:bg-gray-200">
+                    class="flex gap-3 items-center mb-3 px-4 py-2.5 rounded-full @if(request()->is('/')) bg-gray-300 @else hover:bg-gray-200 @endif">
                     <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                         fill="none" viewBox="0 0 20 20">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -125,8 +125,8 @@
                     </svg>
                     <span>File saya</span>
                 </a>
-                <a href="/file-global" data-tooltip-target="my-file" data-tooltip-placement="right"
-                    class="flex gap-3 items-center mb-3 px-4 py-2.5 rounded-full bg-gray-300 hover:bg-gray-200">
+                <a href="/global-file" data-tooltip-target="my-file" data-tooltip-placement="right"
+                    class="flex gap-3 items-center mb-3 px-4 py-2.5 rounded-full @if(request()->is('global-file*')) bg-gray-300 @else hover:bg-gray-200 @endif">
                     <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                         fill="none" viewBox="0 0 21 20">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -136,7 +136,7 @@
                 </a>
                 @if (Auth::user()->status == 2)
                     <a href="/admin" data-tooltip-target="my-file" data-tooltip-placement="right"
-                        class="flex gap-3 items-center mb-3 px-4 py-2.5 rounded-full bg-gray-300 hover:bg-gray-200">
+                        class="flex gap-3 items-center mb-3 px-4 py-2.5 rounded-full @if(request()->is('admin*')) bg-gray-300 @else hover:bg-gray-200 @endif">
                         <svg class="w-5 h-5 text-gray-800" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -153,7 +153,7 @@
 
                 <button data-tooltip-target="modal-signout" data-tooltip-placement="right"
                     data-modal-target="modal-signout" data-modal-toggle="modal-signout"
-                    class="flex w-full gap-3 items-center mb-3 px-4 py-2.5 rounded-full bg-gray-300 hover:bg-gray-200">
+                    class="flex w-full gap-3 items-center mb-3 px-4 py-2.5 rounded-full">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                         aria-hidden="true" class="w-4 h-4">
                         <path fill-rule="evenodd"

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UpdateUserRequest extends FormRequest
 {
-     /**
+    /**
      * Indicates if the validator should stop on the first rule failure.
      *
      * @var bool
@@ -27,10 +27,7 @@ class UpdateUserRequest extends FormRequest
 
         if ($this->file('pp')) {
             $rules['pp'] = 'max:2048|mimes:png,jpg,jpeg,gif';
-            session()->flash('isNewAvatar', true);
         } else {
-            session()->flash('isNewAvatar', false);
-
             if ($this->input('password') || Hash::check($this->input('password'), $this->user()->password)) {
                 $rules['password'] = 'required|min:6';
             }
@@ -47,22 +44,22 @@ class UpdateUserRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'fullname.required' => 'Please enter your full name; we can\'t proceed without it!',
-            'fullname.regex' => 'Only letters are allowed in the full name, no special characters!',
-            'fullname.min' => 'Your full name must contain a minimum of 5 characters!',
-            'username.required' => 'Kindly provide your chosen username, it\'s a required field!',
-            'username.min' => 'Your username must be at least 5 characters long; a bit more creativity, please!',
-            'username.max' => 'Username is too long (maximum is 39 characters). Username may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen.',
-            'username.unique' => 'Oops! This username is already in use; please choose another one!',
-            'username.regex' => 'Username may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen',
-            'email.required' => 'An email address is required; please fill in this essential field!',
-            'email.email' => 'The email format seems to be incorrect, please double-check!',
-            'email.unique' => 'This email address is already associated with an account!',
-            'password.required' => 'The password field cannot be left empty!',
-            'password.min' => 'Your password must be at least 6 characters long!',
-            'password.confirmed' => 'The password confirmation does not match the entered password!',
-            'pp.mimes' => 'We only support GIF, JPEG, JPG, or PNG file!',
-            'pp.max' => 'Please upload an image smaller than 2 MB.',
+            'fullname.required' => 'Mohon masukkan nama lengkap Anda; kami tidak dapat melanjutkan tanpa itu!',
+            'fullname.regex' => 'Hanya huruf yang diizinkan dalam nama lengkap, tanpa karakter khusus!',
+            'fullname.min' => 'Nama lengkap Anda harus mengandung minimal 5 karakter!',
+            'username.required' => 'Harap berikan username pilihan Anda, ini adalah kolom wajib!',
+            'username.min' => 'Username Anda harus memiliki setidaknya 5 karakter; sedikit lebih kreatif, tolong!',
+            'username.max' => 'Username terlalu panjang (maksimum 39 karakter). Username hanya boleh mengandung karakter alfanumerik atau tanda hubung tunggal, dan tidak boleh dimulai atau diakhiri dengan tanda hubung.',
+            'username.unique' => 'Ups! Username ini sudah digunakan; silakan pilih yang lain!',
+            'username.regex' => 'Username hanya boleh mengandung karakter alfanumerik atau tanda hubung tunggal, dan tidak boleh dimulai atau diakhiri dengan tanda hubung',
+            'email.required' => 'Alamat email diperlukan; silakan isi kolom penting ini!',
+            'email.email' => 'Format email tampaknya salah, harap periksa kembali!',
+            'email.unique' => 'Alamat email ini sudah terkait dengan sebuah akun!',
+            'password.required' => 'Kolom password tidak boleh kosong!',
+            'password.min' => 'Password Anda harus memiliki setidaknya 6 karakter!',
+            'password.confirmed' => 'Konfirmasi password tidak cocok dengan password yang dimasukkan!',
+            'pp.mimes' => 'Kami hanya mendukung file GIF, JPEG, JPG, atau PNG!',
+            'pp.max' => 'Silakan unggah gambar dengan ukuran kurang dari 2 MB.',
         ];
     }
 }

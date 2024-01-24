@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\File;
 use App\Http\Requests\StoreFileRequest;
 use App\Http\Requests\UpdateFileRequest;
+use App\Models\Pesan;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -17,6 +18,8 @@ class FileController extends Controller
     public function index()
     {
         $title = 'File Global';
+        $pesan = Pesan::where('id_penerima', auth()->id())->with(['user','file'])->orderBy('created_at','desc')->get();
+        $jumlahPesan = $pesan->count();
         $files = File::where('status', 'public');
 
         if (request('search')) {
@@ -25,7 +28,7 @@ class FileController extends Controller
 
         $files = $files->get();
 
-        return view('user.file.globalFile', compact('title', 'files'));
+        return view('user.file.globalFile', compact('title', 'files', 'pesan', 'jumlahPesan'));
     }
 
     /**
@@ -94,10 +97,12 @@ class FileController extends Controller
     public function show(File $id_file)
     {
         $title = 'Detail File';
+        $pesan = Pesan::where('id_penerima', auth()->id())->with(['user','file'])->orderBy('created_at','desc')->get();
+        $jumlahPesan = $pesan->count();
         $file = $id_file;
         $formatDate = Carbon::parse($file->created_at)->locale('id')->isoFormat('dddd, D MMMM YYYY', 'Do MMMM YYYY');
 
-        return view('user.file.detail', compact('title', 'file', 'formatDate'));
+        return view('user.file.detail', compact('title', 'file', 'formatDate', 'pesan', 'jumlahPesan'));
     }
 
     /**
@@ -106,14 +111,15 @@ class FileController extends Controller
     public function edit(File $file)
     {
         $title = 'Edit File';
-
+        $pesan = Pesan::where('id_penerima', auth()->id())->with(['user','file'])->orderBy('created_at','desc')->get();
+        $jumlahPesan = $pesan->count();
         if (is_null($file)) {
             session()->flash('gagal', 'File tidak ada');
             return redirect()->back();
         }
         if ($file->id_user != Auth::id()) abort(404);
 
-        return view('user.file.edit', compact('title', 'file'));
+        return view('user.file.edit', compact('title', 'file', 'pesan', 'jumlahPesan'));
     }
 
     /**

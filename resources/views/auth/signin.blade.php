@@ -37,27 +37,17 @@
                                 atau Email</label>
                             <input
                                 class="w-full rounded-md border-0
-                                px-2 py-2.5 sm:py-1.5 text-gray-900m bg-gray-100/50m shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6 outline-none text-sm md:text-base @error('username_email') ring-red-600 ring-2 @enderror"
+                                px-2 py-2.5 sm:py-1.5 text-gray-900m bg-gray-100/50m shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6 outline-none text-sm md:text-base"
                                 id="username_email" type="text" name="username_email"
-                                value="{{ old('username_email') }}" required />
-                            @error('username_email')
-                                <ul class="text-red-500 text-xs space-y-1 list-disc list-inside mt-1.5">
-                                    <p>{{ $message }}</p>
-                                </ul>
-                            @enderror
+                                value="{{ session('username_email') }}"" required />
                         </div>
                         <div class="mt-6">
                             <label class="text-gray-900 font-semibold mb-1.5 block md:text-base text-sm"
                                 for="password">Password</label>
                             <input
                                 class="w-full rounded-md border-0
-                                px-2 py-2.5 sm:py-1.5 text-gray-900m bg-gray-100/50m shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6 outline-none text-sm md:text-base @error('username_email') ring-red-600 ring-2 @enderror"
+                                px-2 py-2.5 sm:py-1.5 text-gray-900m bg-gray-100/50m shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6 outline-none text-sm md:text-base"
                                 id="password" type="password" name="password" required />
-                            @error('password')
-                                <ul class="text-red-500 text-xs space-y-1 list-disc list-inside mt-1.5">
-                                    <p>{{ $message }}</p>
-                                </ul>
-                            @enderror
                         </div>
 
                         <div class="mt-6 w-full">

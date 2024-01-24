@@ -6,6 +6,10 @@ use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\File;
+use App\Models\Pesan;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -15,6 +19,8 @@ class UserController extends Controller
     public function index()
     {
         $title = 'Beranda';
+        $pesan = Pesan::where('id_penerima', auth()->id())->with(['user','file'])->orderBy('created_at','desc')->get();
+        $jumlahPesan = $pesan->count();
         $files = File::where('id_user', auth()->id());
 
         if (request('search')) {
@@ -23,7 +29,7 @@ class UserController extends Controller
 
         $files = $files->get();
 
-        return view('user.index', compact('title', 'files'));
+        return view('user.index', compact('title', 'files', 'pesan', 'jumlahPesan'));
     }
 
     /**
@@ -55,7 +61,15 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        $title = 'Edit Profil';
+        $pesan = Pesan::where('id_penerima', auth()->id())->with(['user','file'])->orderBy('created_at','desc')->get();
+        $jumlahPesan = $pesan->count();
+
+        if ($user->id_user != auth()->id()) {
+            abort(404);
+        }
+
+        return view('user.edit', compact('title', 'user', 'pesan', 'jumlahPesan'));
     }
 
     /**
@@ -63,7 +77,32 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        if ($user->id_user != auth()->id()) {
+            abort(404);
+        }
+
+        $validated = $request->validated();
+        $validated = $request->safe()->only(['fullname', 'username', 'email', 'password', 'pp']);
+        $newAvatar = $validated['pp'] ?? null;
+        $path = 'users/' . auth()->id();
+
+        if (Storage::disk('public')->exists(Auth::user()->pp) && !is_null($newAvatar)) {
+            Storage::delete(Auth::user()->pp);
+        }
+
+        if (!is_null($newAvatar)) {
+            $validPathPP = Storage::disk('public')->put($path, $newAvatar);
+            $validated['pp'] = $validPathPP;
+        }
+
+        if (isset($validated['password'])) {
+            $validated['password'] = Hash::make($request->input('password'));
+        }
+
+        $user->update($validated);
+
+        session()->flash('berhasil', 'Berhasil mengedit data');
+        return redirect('/');
     }
 
     /**
