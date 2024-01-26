@@ -15,7 +15,7 @@ class PesanController extends Controller
      */
     public function index()
     {
-        $title = 'Edit File';
+        $title = 'Notifikasi';
         $pesan = Pesan::where('id_penerima', auth()->id())->with(['user', 'file'])->orderBy('created_at', 'desc')->get();
 
         return view('user.pesan.index', compact('title', 'pesan'));
@@ -44,10 +44,14 @@ class PesanController extends Controller
     {
         $title = 'Detail File';
         $pesan = $id_pesan;
-        $file = File::where('id_file', $pesan->file->id_file)->first();
+        if ($pesan == null) {
+            session()->flash('gagal', 'File tidak ada');
+            return redirect()->back();
+        }
+        $file = File::where('id_file', $pesan->id_file)->first();
         $formatDate = Carbon::parse($file->created_at)->locale('id')->isoFormat('dddd, D MMMM YYYY', 'Do MMMM YYYY');
 
-        return view('user.pesan.detail', compact('title', 'file', 'formatDate'));
+        return view('user.pesan.detail', compact('title', 'pesan', 'file', 'formatDate'));
     }
 
     /**
@@ -69,14 +73,15 @@ class PesanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pesan $id_pesan)
+    public function destroy($id_pesan)
     {
-        if (!$id_pesan) {
-            session()->flash('gagal', 'Gagal hapus pesan');
+        $pesan = Pesan::where('id_pesan', $id_pesan)->first();
+        if (!$pesan) {
+            session()->flash('gagal', 'Gagal menghapus pesan');
             return redirect()->back();
         }
 
-        $id_pesan->destroy($id_pesan->id_pesan);
+        $pesan->destroy($id_pesan);
 
         session()->flash('berhasil', 'Berhasil menghapus pesan');
         return redirect()->back();

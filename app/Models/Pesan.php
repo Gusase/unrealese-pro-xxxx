@@ -9,8 +9,8 @@ class Pesan extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'id_file';
-    protected $guarded = ['id_file'];
+    protected $primaryKey = 'id_pesan';
+    protected $guarded = ['id_pesan'];
 
     public function user() {
         return $this->belongsTo(User::class, 'id_pengirim', 'id_user');

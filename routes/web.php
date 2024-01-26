@@ -30,7 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/signout', [AuthController::class, 'signout']);
 
     Route::get('/', [UserController::class, 'index']);
-    Route::view('/baru', 'user.file.create', ['title' => 'File Baru']);
+    Route::get('/baru', [FileController::class, 'create']);
     Route::resource('file', FileController::class);
     Route::resource('user', UserController::class);
     Route::get('/file/show/{id_file}/{generate_filename}', [FileController::class, 'show']);
@@ -46,5 +46,5 @@ Route::middleware('auth')->group(function () {
     Route::post('/editUser/{id_user}', [AdminController::class, 'update']);
     Route::get('/notifikasi', [PesanController::class, 'index']);
     Route::get('/notifikasi/{id_pesan}', [PesanController::class, 'show']);
-    Route::get('/notifikasi/hapus/{id_pesan}', [PesanController::class, 'destroy']);
+    Route::resource('pesan', PesanController::class);
 });

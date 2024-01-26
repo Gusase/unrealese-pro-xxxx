@@ -29,7 +29,11 @@
                         </div>
                         <div class="inline-flex items-center text-base font-semibold text-gray-900">
                             <a href="/notifikasi/{{ $pesan->id_pesan }}">Lihat</a>
-                            <a href="/notifikasi/hapus/{{ $pesan->id_pesan }}">Hapus</a>
+                            <form method="post" action="/pesan/{{ $pesan->id_pesan }}">
+                                @csrf
+                                @method('delete')
+                                <button>hapus</button>
+                            </form>
                         </div>
                     </div>
                 </li>

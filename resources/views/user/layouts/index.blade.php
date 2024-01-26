@@ -12,7 +12,8 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('logo.ico') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
 
-    <title>{{ $title }} | {{ env('APP_NAME') }}</title>
+    {{-- <title>{{ $title }} | {{ env('APP_NAME') }}</title> --}}
+    <title>{{ $title }} | {{ config('app.name') }}</title>
 
     <!-- Tailwindcss-->
     <script src="https://cdn.tailwindcss.com"></script>
