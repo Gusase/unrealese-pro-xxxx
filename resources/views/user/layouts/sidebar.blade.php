@@ -116,7 +116,7 @@
             </a>
 
             <div class="block mt-5">
-                <a href="{{ env('APP_URL') }}" data-tooltip-target="my-file" data-tooltip-placement="right"
+                <a href="/" data-tooltip-target="my-file" data-tooltip-placement="right"
                     class="flex gap-3 items-center mb-3 px-4 py-2.5 rounded-full @if(request()->is('/')) bg-gray-300 @else hover:bg-gray-200 @endif">
                     <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                         fill="none" viewBox="0 0 20 20">

@@ -2,7 +2,7 @@
 
 @section('content')
     <div
-        class="@if (!$files->isEmpty()) lg:grid-cols-4 2xl:grid-cols-5 min-[2368px]:grid-cols-6  sm:grid-cols-2 md:grid-cols-3 @else sm:grid-cols-1 md:grid-cols-1 place-items-center 2xl:grid-cols-1 min-[2368px]:grid-cols-1 lg:grid-cols-1 h-[90%] @endif grid grid-cols-1 gap-y-[20px] gap-x-[16px] p-3 sm:p-5">
+        class="@if (!$files->isEmpty()) lg:grid-cols-4 2xl:grid-cols-5 min-[2368px]:grid-cols-6  sm:grid-cols-2 md:grid-cols-3 @else sm:grid-cols-1 md:grid-cols-1 place-items-center 2xl:grid-cols-1 min-[2368px]:grid-cols-1 lg:grid-cols-1 h-[90%] @endif grid grid-cols-2 gap-y-[20px] gap-x-[16px] p-3 sm:p-5">
         @if ($files->isEmpty())
             <h1 class="text-center mx-auto text-gray-400 font-semibold text-4xl">Tidak ada file</h1>
         @endif
