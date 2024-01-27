@@ -19,7 +19,7 @@ class UserController extends Controller
     public function index()
     {
         $title = 'Beranda';
-        $pesan = Pesan::where('id_penerima', auth()->id())->with(['user','file'])->orderBy('created_at','desc')->get();
+        $pesan = Pesan::where('id_penerima', auth()->id())->with(['user', 'file'])->orderBy('created_at', 'desc')->get();
         $jumlahPesan = $pesan->count();
         $files = File::where('id_user', auth()->id());
 
@@ -62,7 +62,7 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $title = 'Edit Profil';
-        $pesan = Pesan::where('id_penerima', auth()->id())->with(['user','file'])->orderBy('created_at','desc')->get();
+        $pesan = Pesan::where('id_penerima', auth()->id())->with(['user', 'file'])->orderBy('created_at', 'desc')->get();
         $jumlahPesan = $pesan->count();
 
         if ($user->id_user != auth()->id()) {
@@ -111,5 +111,14 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    public function ajax()
+    {
+        $query = request('q');
+        $users = User::where('username', 'like', "%$query%")->where('username', '!=', Auth::user()->username)->take(5)->get();
+        return response()->json([
+            'dataUsers' => $users
+        ]);
     }
 }

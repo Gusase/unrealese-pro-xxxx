@@ -78,7 +78,7 @@
         </style>
     @endpush
 
-    <div class="max-w-2xl px-1.5 sm:px-0 py-5 lg:mx-auto">
+    <div class="max-w-2xl px-1.5 sm:px-0 py-5 mx-auto">
         <form method="post" action="/file" enctype="multipart/form-data" id="form">
             @csrf
 

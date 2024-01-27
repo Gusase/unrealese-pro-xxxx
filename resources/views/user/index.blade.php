@@ -98,7 +98,7 @@
                         </button>
                     </li>
                     <li>
-                        <button class="inline-flex items-center whitespace-nowrap px-4 py-2 text-sm hover:bg-gray-100"
+                        <button class="inline-flex items-center whitespace-nowrap px-4 py-2 text-sm hover:bg-gray-100 w-full"
                             id="buttonShowModalShare" data-user="{{ Auth::user()->username }}"
                             data-modal-target="modalShareAnotherUser" data-modal-toggle="modalShareAnotherUser"
                             data-id_file="{{ $file->id_file }}">
