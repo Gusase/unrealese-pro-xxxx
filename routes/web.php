@@ -33,11 +33,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/baru', [FileController::class, 'create']);
     Route::resource('file', FileController::class);
     Route::resource('user', UserController::class);
-    Route::get('/file/show/{id_file}/{generate_filename}', [FileController::class, 'show']);
+    Route::get('/file/show/{id_file}/{generate_filename}', [FileController::class, 'show'])->name('file.show');
     Route::get('/download/{id_file}/{id_user}/{generate_filename}', [FileController::class, 'downloadPrivate']);
     Route::get('/d/{id_file}/{filename}', [FileController::class, 'downloadPublic']);
     Route::get('/do/{id_file}', [FileController::class, 'download']);
-    Route::get('/global-file/show/{id_file}/{generate_filename}', [FileController::class, 'show']);
+    Route::get('/global-file/show/{id_file}/{generate_filename}', [FileController::class, 'show'])->name('global-file.show');
     Route::get('/global-file', [FileController::class, 'index']);
     Route::get('/admin', [AdminController::class, 'index']);
     Route::post('/verified/{id_user}', [AdminController::class, 'verified']);

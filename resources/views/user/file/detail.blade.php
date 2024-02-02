@@ -15,18 +15,18 @@
             </div>
             <div
                 class="relative mx-auto block w-full overflow-hidden rounded-lg bg-gray-50 shadow-xl shadow-slate-200 sm:rounded-xl 2xl:w-auto lg:rounded-2xl">
-                {{-- @php
-            $mime = explode('/', $file->mime_type);
-            $extension = $file->ekstensi_file;
-        @endphp
-        @if ($mime[0] == 'image')
-            <img data-src="{{ asset('storage/' . $file->generate_filename) }}" alt="{{ $file->judul_file }}"
-                class="object-contain h-full mx-auto">
-        @else
-            <div class="w-80 h-80 grid place-items-center mx-auto">
-                <x-partial.asset.svg :ext="$extension" />
-            </div>
-        @endif --}}
+                @php
+                    $mime = explode('/', $file->mime_type);
+                    $extension = $file->ekstensi_file;
+                @endphp
+                @if ($mime[0] == 'image')
+                <img data-src="{{ asset('storage/' . $file->generate_filename) }}" alt="{{ $file->judul_file }}"
+                    class="object-contain h-full mx-auto">
+                @else
+                <div class="w-80 h-80 grid place-items-center mx-auto">
+                    @include('user.layouts.svgThumbCard', ['ext' => $extension])
+                </div>
+                @endif
                 <div class="absolute inset-0 rounded-lg ring-1 ring-inset ring-black/10 sm:rounded-xl lg:rounded-2xl">
                 </div>
             </div>
@@ -97,4 +97,15 @@
             </div>
         </div>
     </div>
+    
+@push('script')
+<script>
+    [].forEach.call(document.querySelectorAll("img[data-src]"), function (img) {
+        img.setAttribute("src", img.getAttribute("data-src"));
+        img.onload = function () {
+            img.removeAttribute("data-src");
+        };
+    });
+</script>
+@endpush
 @endsection

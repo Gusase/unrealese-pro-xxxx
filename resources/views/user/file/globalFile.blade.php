@@ -23,7 +23,7 @@
                                 src="{{ $file->user->pp === 'img/defaultProfile.svg' ? asset('img/defaultProfile.svg') : asset('storage/' . $file->user->pp) }}"
                                 class="relative inline-block h-9 w-9 aspect-square !rounded-full  border-2 border-white object-cover object-center hover:z-10" />
                             <div class="w-[90%] sm:min-w-[inherit] lg:w-full">
-                                <a href="/global-file/show/{{ $file->id_user }}/{{ $finalNamaFile }}"
+                                <a href="{{ route('global-file.show',['id_file'=>$file->id_file,'generate_filename'=>$finalNamaFile]) }}"
                                     class="break-all text-sm antialiased font-medium tracking-normal text-inherit line-clamp-1 w-fit isolate relative font-mona no-underline hover:before:scale-x-100 hover:text-black duration-150 p-0.5 pb-0">
                                     {{ $file->user->fullname }}</a>
                             </div>
@@ -43,20 +43,18 @@
 
 
                 <div class="mt-px cursor-default">
-                    <a href="/global-file/show/{{ $file->id_user }}/{{ $finalNamaFile }}"
+                    <a href="{{ route('global-file.show',['id_file'=>$file->id_file,'generate_filename'=>$finalNamaFile]) }}"
                         class="overflow-hidden h-40 bg-white grid place-items-center relative isolate before:absolute before:inset-0 before:z-10 before:block before:origin-bottom-left before:scale-x-0 before:bg-gradient-to-r before:from-gray-200/25 before:opacity-25 before:transition-all hover:before:origin-top-left hover:before:scale-x-100 hover:before:opacity-100">
-                        <img src="{{ asset('storage/' . $file->generate_filename) }}" alt="{{ $file->judul_file }}"
-                            class="object-contain h-[inherit]">
-                        {{-- @php
+                    @php
                         $mime = explode('/', $file->mime_type);
-                        $extension = $file->ekstensi_file;
+                    $extension = $file->ekstensi_file;
                     @endphp
                     @if ($mime[0] == 'image')
                         <img data-src="{{ asset('storage/' . $file->generate_filename) }}" alt="{{ $file->judul_file }}"
                             class="object-contain h-[inherit]">
                     @else
                         @include('user.layouts.svgThumbCard', ['ext' => $extension])
-                    @endif --}}
+                    @endif
                     </a>
                 </div>
 
@@ -110,6 +108,12 @@
 
     @push('script')
         <script>
+            [].forEach.call(document.querySelectorAll("img[data-src]"), function (img) {
+                img.setAttribute("src", img.getAttribute("data-src"));
+                img.onload = function () {
+                    img.removeAttribute("data-src");
+                };
+            });
             function hideDropdownUserIndex(param) {
                 const dpdwn = document.querySelectorAll(param);
                 dpdwn.forEach((m) => {
@@ -132,8 +136,9 @@
                 b.addEventListener("click", () => {
                     const id_file = b.getAttribute("data-id_file");
                     const linkUrl = document.querySelector(`#link[data-id_file="${id_file}"]`);
-                    navigator.clipboard.writeText(linkUrl.value);
-                    alert(`Link telah disalin ke clipboard`);
+                    navigator.clipboard.writeText(linkUrl.value).then(function(x) {
+                        alert("Link telah disalin ke clipboard");
+                    });
                 });
             });
         </script>

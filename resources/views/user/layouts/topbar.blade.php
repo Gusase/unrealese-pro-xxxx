@@ -11,10 +11,13 @@
         </svg>
     </button>
 
-    @if (url()->current() === env('APP_URL') ||
-            url()->current() === env('APP_URL') . '/file-global' ||
-            url()->current() === env('APP_URL') . '/admin' ||
-            url()->current() === env('APP_URL') . '/notifikasi')
+    @php
+        $currentUrl = url()->current() === env('APP_URL');
+    @endphp
+    @if ($currentUrl ||
+            $currentUrl . '/file-global' ||
+            $currentUrl . '/admin' ||
+            $currentUrl . '/notifikasi')
         <form class="w-4/5 max-md:mx-auto sm:w-1/2 xl:w-7/12">
             <div class="relative">
                 <button role="button" type="submit"
@@ -27,7 +30,7 @@
                     </svg>
                     <span class="sr-only">Enter to search</span>
                 </button>
-                <input type="search" id="global-search"
+                <input type="text" id="global-search"
                     class="block w-full p-4 pl-12 md:px-12 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 ring-4 ring-transparent transition placeholder:text-neutral-500 focus:border-neutral-950 focus:outline-none focus:ring-neutral-950/5 h-12"
                     placeholder="Search..." value="{{ request('search') }}" name="search">
                 <div
