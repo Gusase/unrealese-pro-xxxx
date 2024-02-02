@@ -6,7 +6,9 @@ use App\Models\Pesan;
 use App\Http\Requests\StorePesanRequest;
 use App\Http\Requests\UpdatePesanRequest;
 use App\Models\File;
+use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class PesanController extends Controller
 {
@@ -32,9 +34,27 @@ class PesanController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePesanRequest $request)
+    public function store(StorePesanRequest $request, $id_file)
     {
-        //
+        $user = User::where('username', request('username'))->first();
+        if (!$user) {
+            session()->flash('gagal', 'username tidak ada');
+            return redirect()->back();
+        }
+
+        $data = [
+            'id_pengirim' => auth()->id(),
+            'id_penerima' => $user->id_user,
+            'id_file' => $id_file,
+            'pesan' => request('pesan'),
+            'created_at' => Carbon::now('Asia/Jakarta'),
+            'updated_at' => Carbon::now('Asia/Jakarta')
+        ];
+
+        Pesan::create($data);
+
+        session()->flash('berhasil', 'berhasil mengirim file');
+        return redirect()->back();
     }
 
     /**

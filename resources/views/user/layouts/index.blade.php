@@ -69,10 +69,10 @@
                 <div class="p-4 md:p-5 space-y-4">
                     <form id="formShareFile" method="post">
                         @csrf
-                        <div class="mb-3 -mt-2 space-y-1">
+                        {{-- <div class="mb-3 -mt-2 space-y-1">
                             <h5 class="font-medium">Now sharing: </h5>
                             <span class="font-mono fileshrnm truncate inline-block w-[calc(95%_+_1rem)]">~</span>
-                        </div>
+                        </div> --}}
                         <div class="space-y-4">
                             <div class="relative">
                                 <label for="searchUser" class="block mb-2 text-sm font-medium text-gray-900">To
@@ -95,7 +95,7 @@
                         </div>
                         <div class="flex flex-col items-center border-t border-gray-200 rounded-b mt-2">
                             <div class="mt-6 w-full">
-                                <button type="submit" id="sendFile" disabled
+                                <button type="submit" id="sendFile"
                                     class="!w-full text-white bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-300 font-medium rounded-lg focus:ring-offset-2 text-sm px-5 py-2.5 text-center inline-flex w-full justify-center px-4 py-2.5 bg-gray-700 border border-gray-300 rounded-md font-semibold text-xs text-white uppercase tracking-widest shadow-sm hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 disabled:opacity-50 transition ease-in-out duration-150">
                                     Kirim
                                 </button>

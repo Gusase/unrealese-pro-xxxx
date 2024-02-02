@@ -47,5 +47,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/notifikasi', [PesanController::class, 'index']);
     Route::get('/notifikasi/{id_pesan}', [PesanController::class, 'show']);
     Route::resource('pesan', PesanController::class);
-    Route::get('username', [UserController::class, 'ajax']);
+    Route::post('/file/send/{id_file}', [PesanController::class, 'store']);
 });

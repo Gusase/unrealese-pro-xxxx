@@ -98,7 +98,8 @@
                         </button>
                     </li>
                     <li>
-                        <button class="inline-flex items-center whitespace-nowrap px-4 py-2 text-sm hover:bg-gray-100 w-full"
+                        <button
+                            class="inline-flex items-center whitespace-nowrap px-4 py-2 text-sm hover:bg-gray-100 w-full"
                             id="buttonShowModalShare" data-user="{{ Auth::user()->username }}"
                             data-modal-target="modalShareAnotherUser" data-modal-toggle="modalShareAnotherUser"
                             data-id_file="{{ $file->id_file }}">
@@ -155,6 +156,151 @@
                     alert(`Link telah disalin ke clipboard`);
                 });
             });
+
+            /**
+             * Modal Share Another User
+             */
+            const buttonShowModalShare = document.querySelectorAll("#buttonShowModalShare");
+            buttonShowModalShare.forEach((b) => {
+                b.addEventListener("click", () => {
+                    const modalShareAnotherUser = document
+                        .querySelector("#modalShareAnotherUser")
+                        .classList.add("hidden");
+                    const id_file = b.getAttribute("data-id_file");
+                    hideDropdownUserIndex(".dropdownUserIndex");
+                    const form = document.querySelector('#formShareFile');
+                    form.action = "";
+                    form.action = "file/send/" + id_file;
+                    console.log(form.action)
+                });
+            });
+
+            // /**
+            //  * Kalau pas search nama user klik diluar elemnt daftar nama user
+            //  */
+            // const areaResultUser = document.querySelector("#result");
+            // areaResultUser &&
+            //     document.addEventListener("click", function(event) {
+            //         // Periksa apakah klik dilakukan di luar elemen result
+            //         if (!areaResultUser.contains(event.target)) {
+            //             // Jika ya, tambahkan class hidden pada elemen result
+            //             areaResultUser.classList.add("hidden");
+            //         }
+            //     });
+            // // Event listener untuk menampilkan kembali elemen result jika diklik
+            // areaResultUser &&
+            //     areaResultUser.addEventListener("click", function(event) {
+            //         // Hapus class hidden saat elemen result diklik
+            //         areaResultUser.classList.remove("hidden");
+            //     });
+
+            // /**
+            //  * Deklarasi variable
+            //  */
+            // const result = document.querySelector("#result");
+            // const textAreaPesan = document.querySelector("#pesan");
+            // const buttonModalShare = document.querySelectorAll("#bSearch");
+            // const searchUser = document.querySelector("#searchUser");
+            // const notfon = document.querySelector("#notfon");
+            // const btnSendFile = document.querySelector("#sendFile");
+            // let clicked = false;
+            // let username;
+
+            // textAreaPesan &&
+            //     textAreaPesan.addEventListener("focus", () => {
+            //         result.classList.add("hidden");
+            //         searchUser.classList.add("rounded-lg");
+            //         searchUser.classList.remove("rounded-t-lg");
+            //     });
+
+            // searchUser &&
+            //     searchUser.addEventListener("input", () => {
+            //         let valueSearch = searchUser.value.trim();
+            //         if (valueSearch != "") {
+            //             result.innerHTML = "<span class='block px-4 py-2'>Loading...</span>";
+            //             const {
+            //                 userPromise
+            //             } = fetch(`/username?q=${valueSearch}`, {
+            //                     method: "GET",
+            //                     headers: {
+            //                         "Content-Type": "application/json",
+            //                     },
+            //                 })
+            //                 .then((response) => {
+            //                     return response.json();
+            //                 })
+            //                 .then((dataUsers) => {
+            //                     const users = dataUsers.dataUsers;
+            //                     result.innerHTML = "";
+            //                     searchUser.addEventListener("keyup", function() {
+            //                         clicked = false;
+            //                         btnSendFile.disabled = true;
+            //                     });
+
+            //                     if (users.length == 0) {
+            //                         searchUser.classList.add("rounded-lg");
+            //                         searchUser.classList.remove("rounded-t-lg");
+            //                         result.classList.add("hidden");
+            //                         notfon.textContent = `User '${valueSearch}' tidak ada!`;
+            //                         notfon.classList.remove("hidden");
+            //                         notfon.classList.add("block");
+            //                         btnSendFile.disabled = true;
+            //                     } else {
+            //                         searchUser.classList.remove("rounded-lg");
+            //                         searchUser.classList.add("rounded-t-lg");
+            //                         result.classList.remove("hidden");
+            //                         result.classList.add("block");
+            //                         notfon.classList.remove("block");
+            //                         notfon.classList.add("hidden");
+            //                     }
+
+            //                     users.forEach((user) => {
+            //                         const li = document.createElement("li");
+            //                         li.textContent = user.username;
+            //                         li.classList.add(
+            //                             "userLi",
+            //                             "block",
+            //                             "px-4",
+            //                             "py-2",
+            //                             "hover:bg-gray-100"
+            //                         );
+            //                         li.setAttribute("role", "button");
+            //                         result.appendChild(li);
+
+            //                         let liUser = document.querySelectorAll(".userLi");
+            //                         liUser.forEach((uli) => {
+            //                             uli.addEventListener("click", () => {
+            //                                 searchUser.value = uli.innerText;
+            //                                 result.innerHTML = "";
+            //                                 countResult = null;
+            //                                 clicked = true;
+
+            //                                 if (clicked) {
+            //                                     searchUser.classList.add("rounded-lg");
+            //                                     searchUser.classList.remove("rounded-t-lg");
+            //                                     result.classList.add("hidden");
+            //                                     btnSendFile.disabled = false;
+            //                                 } else {
+            //                                     btnSendFile.disabled = true;
+            //                                 }
+            //                             });
+            //                         });
+            //                     });
+            //                 })
+            //                 .catch((error) => {
+            //                     console.error(`Tetot ada error ni: ${error.message}`);
+            //                 });
+            //         } else {
+            //             searchUser.classList.add("rounded-lg");
+            //             searchUser.classList.remove("rounded-t-lg");
+            //             notfon.classList.add("hidden");
+            //             notfon.classList.remove("block");
+            //             result.classList.add("hidden");
+            //             result.classList.remove("block");
+            //             result.innerHTML = "";
+            //             btnSendFile.disabled = true;
+            //         }
+            //     });
         </script>
     @endpush
 @endsection
