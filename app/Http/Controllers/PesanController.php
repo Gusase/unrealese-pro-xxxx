@@ -37,6 +37,7 @@ class PesanController extends Controller
     public function store(StorePesanRequest $request, $id_file)
     {
         $user = User::where('username', request('username'))->first();
+        
         if (!$user) {
             session()->flash('gagal', 'username tidak ada');
             return redirect()->back();

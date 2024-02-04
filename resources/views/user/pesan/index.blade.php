@@ -1,4 +1,4 @@
-@extends('user.layouts.index')
+ @extends('user.layouts.index')
 
 @section('content')
     <div class="mx-auto mt-5 px-5 max-w-md">
@@ -28,9 +28,6 @@
                             <div class="flex-1 min-w-0 ms-4">
                                 <p class="text-base font-medium text-gray-900 truncate">
                                     {{ $pesan->user->fullname }} | {{ $pesan->user->username }}
-                                </p>
-                                <p class="text-sm text-gray-500 truncate">
-                                    {{ $pesan->user->email }}
                                 </p>
                                 <p class="text-sm text-gray-500 truncate">
                                     {{ Carbon::parse($pesan->created_at)->locale('id')->diffForHumans() }}

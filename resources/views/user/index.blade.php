@@ -17,7 +17,7 @@
                 data-id_file="{{ $file->id_file }}">
 
                 <div class="flex justify-between px-2 mt-2 my-1">
-                    <a href="/file/show/{{ $file->id_user }}/{{ $finalNamaFile }}" class="w-full">
+                    <a href="{{ route('file.show',['id_file'=>$file->id_file,'generate_filename'=>$finalNamaFile]) }}" class="w-full">
                         <span
                             class="line-clamp-1 break-all font-medium text-gray-800 w-fit isolate relative font-mona no-underline hover:text-black duration-150 p-0.5 pb-0 text-base sm:text-lg font-mona"
                             title="{{ $file->original_filename }}">{{ $file->original_filename }}</span>
@@ -34,11 +34,9 @@
                     </button>
                 </div>
 
-                <a href="/file/show/{{ $file->id_user }}/{{ $finalNamaFile }}"
+                <a href="{{ route('file.show',['id_file'=>$file->id_file,'generate_filename'=>$finalNamaFile]) }}"
                     class="overflow-hidden h-40 mt-px cursor-pointer bg-white grid place-items-center relative isolate before:absolute before:inset-0 before:z-10 before:block before:origin-bottom-left before:scale-x-0 before:bg-gradient-to-r before:from-gray-200/25 before:opacity-25 before:transition-all hover:before:origin-top-left hover:before:scale-x-100 hover:before:opacity-100">
-                    <img src="{{ asset('storage/' . $file->generate_filename) }}" alt="{{ $file->judul_file }}"
-                        class="object-contain h-[inherit]">
-                    {{-- @php
+                    @php
                         $mime = explode('/', $file->mime_type);
                         $extension = $file->ekstensi_file;
                     @endphp
@@ -47,7 +45,7 @@
                             class="object-contain h-[inherit]">
                     @else
                         @include('user.layouts.svgThumbCard', ['ext' => $extension])
-                    @endif --}}
+                    @endif
                 </a>
             </div>
 
@@ -130,6 +128,12 @@
 
     @push('script')
         <script>
+            [].forEach.call(document.querySelectorAll("img[data-src]"), function (img) {
+                img.setAttribute("src", img.getAttribute("data-src"));
+                img.onload = function () {
+                    img.removeAttribute("data-src");
+                };
+            });
             function hideDropdownUserIndex(param) {
                 const dpdwn = document.querySelectorAll(param);
                 dpdwn.forEach((m) => {
@@ -152,8 +156,9 @@
                 b.addEventListener("click", () => {
                     const id_file = b.getAttribute("data-id_file");
                     const linkUrl = document.querySelector(`#link[data-id_file="${id_file}"]`);
-                    navigator.clipboard.writeText(linkUrl.value);
-                    alert(`Link telah disalin ke clipboard`);
+                    navigator.clipboard.writeText(linkUrl.value).then(function(x) {
+                        alert("Link telah disalin ke clipboard");
+                    });
                 });
             });
 

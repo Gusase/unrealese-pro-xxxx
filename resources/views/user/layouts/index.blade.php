@@ -3,7 +3,7 @@
 
 <head>
     @if (session('download'))
-        <meta http-equiv="refresh" content="0; url={{ url('/do/' . session('download')) }}">
+    <meta http-equiv="refresh" content="0; url={{ url('/do/' . session('download')) }}">
     @endif
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -90,7 +90,8 @@
                                     message</label>
                                 <textarea rows="2"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                                    placeholder="From {{ Auth::user()->username }}..." name="pesan" id="pesan"></textarea>
+                                    placeholder="From {{ Auth::user()->username }}..." name="pesan"
+                                    id="pesan"></textarea>
                             </div>
                         </div>
                         <div class="flex flex-col items-center border-t border-gray-200 rounded-b mt-2">
@@ -101,7 +102,8 @@
                                 </button>
                             </div>
                             <button
-                                class="justify-center w-full text-center mt-2 inline-flex items-center px-4 py-2.5 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-redd-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150" data-modal-hide="modalShareAnotherUser">
+                                class="justify-center w-full text-center mt-2 inline-flex items-center px-4 py-2.5 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-redd-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150"
+                                data-modal-hide="modalShareAnotherUser">
                                 Cancel
                             </button>
                         </div>
@@ -146,7 +148,7 @@
                 </div>
             </div>
             <div class="mt-2.5">
-                <a href="/baru" 
+                <a href="/baru"
                     class="p-2 rounded-xl shadow-md text-base max-md:w-full bg-white pe-4 flex items-center gap-3 px-3 w-max transition-all hover:bg-gray-900 hover:text-white">
                     <span class="-mr-1.5 text-3xl mb-1">+</span> Baru
                 </a>
@@ -156,8 +158,7 @@
                         class="flex gap-3 items-center mb-3 px-4 py-2.5 rounded-full @if (request()->is('/')) bg-gray-300 @else hover:bg-gray-200 @endif">
                         <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                             fill="none" viewBox="0 0 20 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2"
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M10 18a.969.969 0 0 1-.933 1H1.933A.97.97 0 0 1 1 18V9l4-4m-4 5h5m3-4h5V1m5 1v12a.97.97 0 0 1-.933 1H9.933A.97.97 0 0 1 9 14V5l4-4h5.067A.97.97 0 0 1 19 2Z" />
                         </svg>
                         <span>File saya</span>
@@ -166,23 +167,22 @@
                         class="flex gap-3 items-center mb-3 px-4 py-2.5 rounded-full @if (request()->is('global-file*')) bg-gray-300 @else hover:bg-gray-200 @endif">
                         <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                             fill="none" viewBox="0 0 21 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2"
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M6.487 1.746c0 4.192 3.592 1.66 4.592 5.754 0 .828 1 1.5 2 1.5s2-.672 2-1.5a1.5 1.5 0 0 1 1.5-1.5h1.5m-16.02.471c4.02 2.248 1.776 4.216 4.878 5.645C10.18 13.61 9 19 9 19m9.366-6h-2.287a3 3 0 0 0-3 3v2m6-8a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                         </svg>
                         <span style="ml-1">File global</span>
                     </a>
                     @if (Auth::user()->status == 2)
-                        <a href="/admin"
-                            class="flex gap-3 items-center mb-3 px-4 py-2.5 rounded-full @if (request()->is('admin*')) bg-gray-300 @else hover:bg-gray-200 @endif">
-                            <svg class="w-5 h-5 text-gray-800" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z">
-                                </path>
-                            </svg>
-                            <span class="ml-1">User Data</span>
-                        </a>
+                    <a href="/admin"
+                        class="flex gap-3 items-center mb-3 px-4 py-2.5 rounded-full @if (request()->is('admin*')) bg-gray-300 @else hover:bg-gray-200 @endif">
+                        <svg class="w-5 h-5 text-gray-800" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z">
+                            </path>
+                        </svg>
+                        <span class="ml-1">User Data</span>
+                    </a>
                     @endif
 
 
@@ -231,7 +231,8 @@
                         <div class="!w-max">
                             <button
                                 class="inline-flex w-full justify-center px-4 py-2.5 bg-red-700 border border-red-600 rounded-md font-semibold text-xs text-white uppercase tracking-widest shadow-sm hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:opacity-50 transition ease-in-out duration-150""
-                                class="text-white bg-red-700 !mt-0 hover:bg-red-800 focus:ring-2 focus:ring-offset-2 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm text-center">
+                                class=" text-white bg-red-700 !mt-0 hover:bg-red-800 focus:ring-2 focus:ring-offset-2
+                                focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm text-center">
                                 Signout
                             </button>
                         </div>
@@ -361,24 +362,23 @@
     </div>
 
     @if (session()->has('berhasil') || session()->has('gagal'))
-        <div id="alert"
-            class="absolute bottom-[2vh] left-[4vh] z-20 !mb-5 flex max-w-xl items-center space-x-2 rounded-lg bg-gray-700 p-3 text-white"
-            role="alert">
-            <div class="w-full pe-2 text-sm font-medium">
-                <p>{{ session('gagal') }}</p>
-                <p>{{ session('berhasil') }}</p>
-            </div>
-            <button type="button"
-                class="inline-flex aspect-square h-8 w-8 items-center justify-center rounded-md text-white outline-none ring-1 ring-gray-300 duration-150 focus-within:ring-2 hover:ring-2 focus:ring-2"
-                data-dismiss-target="#alert" aria-label="Close">
-                <span class="sr-only">Close</span>
-                <svg class="h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 14 16">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"></path>
-                </svg>
-            </button>
+    <div id="alert"
+        class="absolute bottom-[2vh] left-[4vh] z-20 !mb-5 flex max-w-xl items-center space-x-2 rounded-lg bg-gray-700 p-3 text-white"
+        role="alert">
+        <div class="w-full pe-2 text-sm font-medium">
+            <p>{{ session('gagal') }}</p>
+            <p>{{ session('berhasil') }}</p>
         </div>
+        <button type="button" autofocus
+            class="inline-flex aspect-square h-8 w-8 items-center justify-center rounded-md text-white outline-none ring-1 ring-gray-300 duration-150 focus-within:ring-2 hover:ring-2 focus:ring-2"
+            data-dismiss-target="#alert" aria-label="Close">
+            <span class="sr-only">Close</span>
+            <svg class="h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 16">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"></path>
+            </svg>
+        </button>
+    </div>
     @endif
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
